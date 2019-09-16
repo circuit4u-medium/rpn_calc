@@ -29,6 +29,7 @@ int main(void)
                 *p++ = ch;  //save to txt_buf
                 i++;
             }else if(ch=='\r' || ch=='\n'){
+                *p = 0; //end cmd string
                 textEval(txt_buf);
                 break;
             }else if(i>=64){ //overflow protection
