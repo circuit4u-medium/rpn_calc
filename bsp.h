@@ -1,5 +1,3 @@
-
-
 #ifndef BSP_H_
 #define BSP_H_
 
@@ -11,7 +9,7 @@ void init_SYS()
 
     PM5CTL0 &= ~LOCKLPM5; // Disable the GPIO power-on default high-impedance mode
                           // to activate 1previously configured port settings
-    __bis_SR_register(SCG0);                              // disable FLL
+    __bis_SR_register(SCG0);                          // disable FLL
     CSCTL3 |= SELREF__REFOCLK;               // Set REFO as FLL reference source
     CSCTL0 = 0;                              // clear DCO and MOD registers
     CSCTL1 &= ~(DCORSEL_7);             // Clear DCO frequency select bits first
@@ -84,5 +82,21 @@ void uart_puts(const char *str)                 // Output a string
         uart_putc(*str++);
 }
 
+unsigned char uart_getc()
+{
+    while (!(UCA0IFG & UCRXIFG))
+        ;
+    // USCI_A0 RX buffer ready?
+    return UCA0RXBUF;
+}
+
+//gpio
+#define LED_PIN BIT0  //p1.0
+
+void init_GPIO()
+{
+    P1DIR |= LED_PIN;
+    P1OUT |= LED_PIN;
+}
 
 #endif /* BSP_H_ */

@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v18.12.3                    
 ******************************************************************************
->> Linked Mon Sep 16 10:19:01 2019
+>> Linked Mon Sep 16 11:05:13 2019
 
 OUTPUT FILE NAME:   <rpn_calc.out>
-ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000c476
+ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000c524
 
 
 MEMORY CONFIGURATION
@@ -16,7 +16,7 @@ MEMORY CONFIGURATION
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
   INFOA                 00001800   00000200  00000000  00000200  RWIX
   RAM                   00002000   00001000  000000a0  00000f60  RWIX
-  FRAM                  0000c400   00003b80  000000d0  00003ab0  RWIX
+  FRAM                  0000c400   00003b80  00000182  000039fe  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   INT00                 0000ff88   00000002  00000000  00000002  RWIX
@@ -104,19 +104,22 @@ section   page    origin      length       input sections
 .mspabi.extab 
 *          0    0000c400    00000000     UNINITIALIZED
 
-.const     0    0000c400    00000010     
-                  0000c400    00000010     main.obj (.const:.string)
+.const     0    0000c400    00000038     
+                  0000c400    00000038     main.obj (.const:.string)
 
-.text      0    0000c410    000000c0     
-                  0000c410    00000042     main.obj (.text:init_SYS)
-                  0000c452    00000024     main.obj (.text:init_UART)
-                  0000c476    00000014     rts430x_lc_sd_eabi.lib : boot.c.obj (.text:_isr:_c_int00_noinit_noargs)
-                  0000c48a    00000014     main.obj (.text:main)
-                  0000c49e    00000012     main.obj (.text:uart_puts)
-                  0000c4b0    0000000e     main.obj (.text:uart_putc)
-                  0000c4be    00000008     rts430x_lc_sd_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
-                  0000c4c6    00000006                            : exit.c.obj (.text:abort)
-                  0000c4cc    00000004                            : pre_init.c.obj (.text:_system_pre_init)
+.text      0    0000c438    0000014a     
+                  0000c438    00000054     main.obj (.text:main)
+                  0000c48c    00000042     main.obj (.text:init_SYS)
+                  0000c4ce    00000032     main.obj (.text:textEval)
+                  0000c500    00000024     main.obj (.text:init_UART)
+                  0000c524    00000014     rts430x_lc_sd_eabi.lib : boot.c.obj (.text:_isr:_c_int00_noinit_noargs)
+                  0000c538    00000012     main.obj (.text:uart_puts)
+                  0000c54a    0000000e     main.obj (.text:uart_getc)
+                  0000c558    0000000e     main.obj (.text:uart_putc)
+                  0000c566    0000000a     main.obj (.text:init_GPIO)
+                  0000c570    00000008     rts430x_lc_sd_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
+                  0000c578    00000006                            : exit.c.obj (.text:abort)
+                  0000c57e    00000004                            : pre_init.c.obj (.text:_system_pre_init)
 
 .stack     0    00002f60    000000a0     UNINITIALIZED
                   00002f60    00000002     rts430x_lc_sd_eabi.lib : boot.c.obj (.stack)
@@ -198,9 +201,9 @@ MODULE SUMMARY
        Module             code   ro data   rw data
        ------             ----   -------   -------
     .\
-       main.obj           154    16        0      
+       main.obj           292    56        0      
     +--+------------------+------+---------+---------+
-       Total:             154    16        0      
+       Total:             292    56        0      
                                                   
     C:\ti\ccs910\ccs\tools\compiler\ti-cgt-msp430_18.12.3.LTS\lib\rts430x_lc_sd_eabi.lib
        boot.c.obj         20     2         0      
@@ -230,7 +233,7 @@ MODULE SUMMARY
                                                   
        Stack:             0      0         160    
     +--+------------------+------+---------+---------+
-       Grand Total:       192    54        160    
+       Grand Total:       330    94        160    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -315,7 +318,7 @@ address   name
 00000672  BAKMEM9               
 00000673  BAKMEM9_H             
 00000672  BAKMEM9_L             
-0000c4c6  C$$EXIT               
+0000c578  C$$EXIT               
 000001c0  CRCDI                 
 000001c2  CRCDIRB               
 000001c3  CRCDIRB_H             
@@ -711,7 +714,7 @@ address   name
 000001cc  WDTCTL_L              
 00003000  __STACK_END           
 000000a0  __STACK_SIZE          
-0000c4be  __TI_ISR_TRAP         
+0000c570  __TI_ISR_TRAP         
 0000ffda  __TI_int41            
 0000ffdc  __TI_int42            
 0000ffde  __TI_int43            
@@ -734,16 +737,19 @@ ffffffff  __TI_pprof_out_hndl
 ffffffff  __TI_prof_data_size   
 ffffffff  __TI_prof_data_start  
 ffffffff  __c_args__            
-0000c476  _c_int00_noinit_noargs
+0000c524  _c_int00_noinit_noargs
 0000fffe  _reset_vector         
 00002f60  _stack                
-0000c4cc  _system_pre_init      
-0000c4c6  abort                 
-0000c410  init_SYS              
-0000c452  init_UART             
-0000c48a  main                  
-0000c4b0  uart_putc             
-0000c49e  uart_puts             
+0000c57e  _system_pre_init      
+0000c578  abort                 
+0000c566  init_GPIO             
+0000c48c  init_SYS              
+0000c500  init_UART             
+0000c438  main                  
+0000c4ce  textEval              
+0000c54a  uart_getc             
+0000c558  uart_putc             
+0000c538  uart_puts             
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -1224,16 +1230,19 @@ address   name
 0000071f  ADCIV_H               
 00002f60  _stack                
 00003000  __STACK_END           
-0000c410  init_SYS              
-0000c452  init_UART             
-0000c476  _c_int00_noinit_noargs
-0000c48a  main                  
-0000c49e  uart_puts             
-0000c4b0  uart_putc             
-0000c4be  __TI_ISR_TRAP         
-0000c4c6  C$$EXIT               
-0000c4c6  abort                 
-0000c4cc  _system_pre_init      
+0000c438  main                  
+0000c48c  init_SYS              
+0000c4ce  textEval              
+0000c500  init_UART             
+0000c524  _c_int00_noinit_noargs
+0000c538  uart_puts             
+0000c54a  uart_getc             
+0000c558  uart_putc             
+0000c566  init_GPIO             
+0000c570  __TI_ISR_TRAP         
+0000c578  C$$EXIT               
+0000c578  abort                 
+0000c57e  _system_pre_init      
 0000ffda  __TI_int41            
 0000ffdc  __TI_int42            
 0000ffde  __TI_int43            
@@ -1258,4 +1267,4 @@ ffffffff  __TI_prof_data_size
 ffffffff  __TI_prof_data_start  
 ffffffff  __c_args__            
 
-[507 symbols]
+[510 symbols]
