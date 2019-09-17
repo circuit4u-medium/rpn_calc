@@ -93,10 +93,17 @@ unsigned char uart_getc()
 //gpio
 #define LED_PIN BIT0  //p1.0
 
+//tm1638
+#define STB_PIN BIT1 //p1.1
+#define CLK_PIN BIT2 //p1.2
+#define DIO_PIN BIT3 //p1.3
+
+
 void init_GPIO()
 {
-    P1DIR |= LED_PIN;
-    P1OUT |= LED_PIN;
+    P1DIR |= (LED_PIN|STB_PIN|CLK_PIN|DIO_PIN);
+    P1OUT |= (LED_PIN|STB_PIN);
+
 }
 
 #endif /* BSP_H_ */

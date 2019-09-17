@@ -1,5 +1,8 @@
 #include "bsp.h"
+#include "gvars.h"
+#include "tm1638.h"
 #include "txtzyme.h"
+
 
 /**
  * main.c
