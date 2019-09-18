@@ -54,7 +54,7 @@ static int button_thread(struct pt * pt)
         delay_mS(2);
         if (!(P2IN & TEST_PIN))
         {
-            WDTCTL |=  WDTPW + WDTCNTCL; //clear watchdog timer
+            WDTCTL = WDTPW + WDTCNTCL + (WDTCTL & 0x00ff); //clear watchdog timer
             //x = TA1R;
             if (P1IN & LED_PIN){
                 P1OUT &= ~LED_PIN;
