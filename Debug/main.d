@@ -10,6 +10,9 @@ main.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.3.LTS/include/intr
 main.obj: ../gvars.h
 main.obj: ../tm1638.h
 main.obj: ../txtzyme.h
+main.obj: ../pt.h
+main.obj: ../lc.h
+main.obj: ../lc-switch.h
 
 ../main.c: 
 ../bsp.h: 
@@ -21,3 +24,6 @@ C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.3.LTS/include/intrinsics_leg
 ../gvars.h: 
 ../tm1638.h: 
 ../txtzyme.h: 
+../pt.h: 
+../lc.h: 
+../lc-switch.h: 

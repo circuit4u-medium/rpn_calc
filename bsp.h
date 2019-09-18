@@ -7,6 +7,7 @@ void init_SYS()
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
 
+
     PM5CTL0 &= ~LOCKLPM5; // Disable the GPIO power-on default high-impedance mode
                           // to activate 1previously configured port settings
     __bis_SR_register(SCG0);                          // disable FLL
@@ -82,9 +83,13 @@ void uart_puts(const char *str)                 // Output a string
         uart_putc(*str++);
 }
 
+int uart_available(){
+    return (UCA0IFG & UCRXIFG);
+}
+
 unsigned char uart_getc()
 {
-    while (!(UCA0IFG & UCRXIFG))
+    //while (!(UCA0IFG & UCRXIFG))
         ;
     // USCI_A0 RX buffer ready?
     return UCA0RXBUF;
@@ -93,16 +98,35 @@ unsigned char uart_getc()
 //gpio
 #define LED_PIN BIT0  //p1.0
 
+#define TEST_PIN BIT3 //p2.3
+#define POWER_PIN BIT7 //p2.7
+
 //tm1638
 #define STB_PIN BIT1 //p1.1
 #define CLK_PIN BIT2 //p1.2
 #define DIO_PIN BIT3 //p1.3
+
+#pragma vector=PORT2_VECTOR
+__interrupt void Port_2(void)
+{
+    P2IFG &= ~POWER_PIN;
+    __bic_SR_register_on_exit(LPM3_bits);   // Exit LPM3
+}
 
 
 void init_GPIO()
 {
     P1DIR |= (LED_PIN|STB_PIN|CLK_PIN|DIO_PIN);
     P1OUT |= (LED_PIN|STB_PIN);
+
+    //pull-up
+    P2REN |= (TEST_PIN | POWER_PIN);
+    P2OUT |= (TEST_PIN | POWER_PIN);
+
+    P2IES |= POWER_PIN;
+    P2IE |= POWER_PIN;
+    P2IFG &= ~POWER_PIN;
+
 
 }
 
